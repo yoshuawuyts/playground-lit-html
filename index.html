@@ -1,0 +1,41 @@
+<html>
+  <script type="module">
+    import { html, render } from
+'https://unpkg.com/lit-html@0.9.0/lib/lit-extended.js'
+    var state = {
+      bool: false
+    }
+
+    window.choo = {
+      state: state
+    }
+
+    // NOTE: This is probably the coolest part of the whole thing - no more
+    // working around shortcomings in HTML - ayeeee
+    var persistentFragment = html`<div>this is in place</div>`
+
+    function Tree (state) {
+      return html`
+        <main>
+          ${persistentFragment}
+          <div>Value is ${state.bool}</div>
+          <button on-click=${onclick}>
+            clicky!
+          </button>
+        </main>
+      `
+    }
+
+    function onclick (e) {
+      state.bool = !state.bool
+      rerender()
+    }
+
+    function rerender () {
+      render(Tree(state), document.body)
+    }
+    rerender()
+  </script>
+</html>
+<body>
+</body>
